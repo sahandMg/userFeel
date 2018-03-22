@@ -45,5 +45,5 @@ Route::get('/test', function () {
     return $arr;
 });
 
-Route::get('get-data',['uses'=>'VisitorController@getData','as'=>'getData']);
-Route::get('update-data',['uses'=>'VisitorController@updateData','as'=>'updateData']);
+Route::post('get-data',['uses'=>'VisitorController@getData','as'=>'getData']);
+Route::post('update-data',['uses'=>'VisitorController@updateData','as'=>'updateData']);
