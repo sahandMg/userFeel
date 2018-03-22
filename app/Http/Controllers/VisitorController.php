@@ -5,18 +5,20 @@ namespace App\Http\Controllers;
 use App\Address;
 use App\Feedback;
 use App\Visitor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client as GuzzleClient;
 
 class VisitorController extends Controller
 {
-    public function getData(){
+    public function getData(Request $request){
 
         $client = new GuzzleClient();
-        $response = $client->request('GET','http://localhost/userFeel/public/test');
-        $response = json_decode($response->getBody(),true);
-
+//        $response = $client->request('GET','http://localhost/userFeel/public/test');
+        $response = $request;
+//        $response = json_decode($response->getBody(),true);
+        $response = json_decode($response,true);
         if(!Address::where('url',$response['url'])->first()){
             $adr = new Address();
             $adr->url = $response['url'];
@@ -26,10 +28,10 @@ class VisitorController extends Controller
         $adr = Address::where('url',$response['url'])->first();
         $visitor = new Visitor();
         $visitor->ip = request()->ip();
-        $visitor->period = $response['period'];
-        $visitor->time = $response['time'];
+//        $visitor->period = $response['period'];
+        $visitor->time = Carbon::now();
         $visitor->httpref = $response['httpref'];
-        $visitor->scroll = $response['scroll'];
+//        $visitor->scroll = $response['scroll'];
         $visitor->address_id = $adr->id;
         $visitor->save();
 
@@ -50,8 +52,8 @@ class VisitorController extends Controller
     public function updateData(Request $request){
 
         $client = new GuzzleClient();
-        $resp = $client->request('GET','http://localhost/userFeel/public/test' );
-
+//        $resp = $client->request('GET','http://localhost/userFeel/public/test' );
+        $resp = $request;
         $resp = json_decode($resp->getBody(),true);
         $adr =  Address::where('url',$resp['url'])->first();
         $adr->update([
