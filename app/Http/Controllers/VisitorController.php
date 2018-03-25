@@ -14,11 +14,12 @@ class VisitorController extends Controller
 {
     public function getData(Request $request){
 
-        $client = new GuzzleClient();
+//        $client = new GuzzleClient();
 //        $response = $client->request('GET','http://localhost/userFeel/public/test');
         $response = $request;
 //        $response = json_decode($response->getBody(),true);
-        $response = json_decode($response,true);
+//        $response = json_decode($response,true);
+
         if(!Address::where('url',$response['url'])->first()){
             $adr = new Address();
             $adr->url = $response['url'];
@@ -51,20 +52,17 @@ class VisitorController extends Controller
 
     public function updateData(Request $request){
 
-        $client = new GuzzleClient();
+//        $client = new GuzzleClient();
 //        $resp = $client->request('GET','http://localhost/userFeel/public/test' );
         $resp = $request;
-        $resp = json_decode($resp->getBody(),true);
+
+//        $resp = json_decode($resp->getBody(),true);
         $adr =  Address::where('url',$resp['url'])->first();
-        $adr->update([
-            'visitornum'=>$resp['visitors'],
-            'duration'=>$resp['duration']
-
-        ]);
-
-
         $visitors = Address::where('url',$resp['url'])->first()->visitors;
 
+        $adr->update(['visitornum'=>count($visitors)]);
+
+        $minutes = 0;
         foreach ($visitors as $visitor){
 
             $visitor->update([
@@ -72,7 +70,14 @@ class VisitorController extends Controller
                 'time'=>$resp['time'],
                 'scroll'=>$resp['scroll']
             ]);
+
+            $minutes = $minutes + $visitor->period;
+
+
         }
+        $adr->update(['duration' => $minutes/count($visitors)]);
+
+
 
         $feeds = Address::where('url',$resp['url'])->first()->feedback;
         $feeds->dislikes = $feeds->dislikes + $resp['dislikes'];

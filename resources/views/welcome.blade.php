@@ -9,7 +9,13 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.js"></script>
+            <script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>
+           <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.js"></script>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- Styles -->
         <style>
             html, body {
@@ -91,5 +97,13 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            axios.post('http://localhost/userFeel/public/api/get-data',{'url':'http://charesh.ir'}).then(function (response) {
+
+                alert(response.data)
+            })
+        </script>
+
     </body>
 </html>

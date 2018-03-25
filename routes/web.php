@@ -23,20 +23,18 @@ Route::get('/test', function () {
 
 
 //    $arr = [
-//        'url'=>request()->url(),
+//
 //        'duration'=>'321',
 //        'visitors'=>'21321',
 //        'period'=>'2',
-//        'time'=>
-//            '1:50:01',
+//        'time'=> '1:50:01',
 //        'scroll'=>'2130',
-//        'httpref'=>'https://google.com',
 //        'dislikes'=>'312',
 //        'likes'=>'31'
 //    ];
-
+//    'url'=>request()->url(),
     $arr = [
-        'url'=>request()->url(),
+        'url'=>'http://',
         'time'=> '1:50:01',
         'httpref'=>'https://google.com',
     ];
@@ -45,5 +43,5 @@ Route::get('/test', function () {
     return $arr;
 });
 
-Route::post('get-data',['uses'=>'VisitorController@getData','as'=>'getData']);
-Route::post('update-data',['uses'=>'VisitorController@updateData','as'=>'updateData']);
+//Route::post('get-data',['uses'=>'VisitorController@getData','as'=>'getData']);
+//Route::post('update-data',['uses'=>'VisitorController@updateData','as'=>'updateData']);
