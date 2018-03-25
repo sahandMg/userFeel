@@ -98,12 +98,12 @@
             </div>
         </div>
 
-        <script>
-            axios.post('http://localhost/userFeel/public/api/get-data',{'url':'http://charesh.ir'}).then(function (response) {
+        {{--<script>--}}
+            {{--axios.post('http://localhost/userFeel/public/api/get-data',{'url':'http://charesh.ir'}).then(function (response) {--}}
 
-                alert(response.data)
-            })
-        </script>
+                {{--alert(response.data)--}}
+            {{--})--}}
+        {{--</script>--}}
 
     </body>
 </html>

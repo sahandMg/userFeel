@@ -28,7 +28,7 @@ class VisitorController extends Controller
 
         $adr = Address::where('url',$response['url'])->first();
         $visitor = new Visitor();
-        $visitor->ip = request()->ip();
+        $visitor->ip = $response['ip'];
 //        $visitor->period = $response['period'];
         $visitor->time = Carbon::now();
         $visitor->httpref = $response['httpref'];
@@ -55,7 +55,6 @@ class VisitorController extends Controller
 //        $client = new GuzzleClient();
 //        $resp = $client->request('GET','http://localhost/userFeel/public/test' );
         $resp = $request;
-
 //        $resp = json_decode($resp->getBody(),true);
         $adr =  Address::where('url',$resp['url'])->first();
         $visitors = Address::where('url',$resp['url'])->first()->visitors;
@@ -64,16 +63,13 @@ class VisitorController extends Controller
 
         $minutes = 0;
         foreach ($visitors as $visitor){
-
-            $visitor->update([
-                'period'=>$resp['period'],
-                'time'=>$resp['time'],
-                'scroll'=>$resp['scroll']
-            ]);
-
+            if($request->ip == $visitor->ip){
+                $visitor->update([
+                    'period'=>$resp['period'],
+                    'scroll'=>$resp['scroll']
+                ]);
+            }
             $minutes = $minutes + $visitor->period;
-
-
         }
         $adr->update(['duration' => $minutes/count($visitors)]);
 
